@@ -1,3 +1,14 @@
+
+# auto texturing maya - pipline integration
+
+# daniel casadevall jauhiainen
+
+
+"""
+Importing libraries
+"""
+
+
 import os
 import sys
 import re
