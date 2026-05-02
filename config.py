@@ -1,5 +1,21 @@
 from dataclasses import dataclass
 
+@dataclass
+class validation:
+    base_model = ["sdxl", "sd15"]
+
+    quantization = [None, "fp16", "int8", "int4", "bf16", "fp32"]
+
+    material_types = ["mtlx", "standard"]
+
+    texture_resolutions = {
+        "512": 512,
+        "1k": 1024,
+        "2k": 2048,
+        "4k": 4096,
+        "8k": 8194
+    }
+
 
 @dataclass
 class configuration:
@@ -11,7 +27,8 @@ class configuration:
 
     # MODELS PATHS
 
-    base_model = "models/juggernautXL_ragnarokBy.safetensors"
+    base_model = "sdxl"
+
     controlnet_model = "diffusers/controlnet-normal-sdxl-1.0"
 
     ip_adapter_model = "h94/IP-Adapter"
@@ -19,10 +36,16 @@ class configuration:
     ip_adapter_weight_name = "ip-adapter-plus_sdxl_vit-h.safetensors"
     ip_adapter_scale = 0.7
 
+    quantization = "fp16"
+
     # PATHS
  
-    temporal_path = f"{BASE_DIR}/output2/temp"
-    output_path = f"{BASE_DIR}/output2"
+    material_name = f"material01"
+
+    temporal_path = f"{BASE_DIR}/output/{material_name}/temp"
+    textures_path = f"{BASE_DIR}/output/{material_name}/textures"
+
+    output_path = f"{BASE_DIR}/output/{material_name}"
 
     # GENERATION
     # -- gui editable variables start --
@@ -35,20 +58,15 @@ class configuration:
     blurry, low quality, distorted, shadow, lighting gradients
     """
 
-    texture_resolutions = {
-        "512": 512,
-        "1k": 1024,
-        "2k": 2048,
-        "4k": 4096,
-        "8k": 8194
-    }
-
     texture_resolution = "1k"
 
     inference_steps = 16
     cfg_scale = 7.5
 
+    noise = 0.05
     seed = 123456789
+
+    generated_images = ["diffuse", "roughness", "metalness", "normal", "height"]
 
     # -------------------------------
     # SYSTEM 
@@ -56,29 +74,17 @@ class configuration:
 
     system_prfered = "gpu"
 
-    
+    # -------------------------------
+    # MAYA MATERIAL ASSIGNMENT 
+    # -------------------------------
+
+    assign_maya_material = True
+    material_type = "mtlx"
 
 
-
-
-    face_order = [
-        "front", 
-        "left", 
-        "top", 
-        "back", 
-        "right", 
-        "bottom"
-    ]
-
-    view_rotations = {
-        "front":  ( 0,    0, 0),
-        "back":   ( 0,  180, 0),
-        "left":   ( 0,   90, 0),
-        "right":  ( 0,  -90, 0),
-        "top":    (-90,   0, 0),
-        "bottom": ( 90,   0, 0),
-    } 
-        
+    # -------------------------------
+    # EXTRA SETTINGS 
+    # -------------------------------
     
     uv_chunk_size = 500
     ortho_padding = 0.08
@@ -91,3 +97,12 @@ class configuration:
     seam_fixer_script = "mPiplineDiffsuionSolver.py"
     seam_fixer_strength = 0.55
     seam_fixer_steps = 25
+
+    def __post_init__(self):
+        v = validation()
+        if self.material_type not in v.material_types:
+            raise ValueError(f"Invalid material type: {self.material_type}. Must be one of {v.material_types}.")
+        if self.texture_resolution not in v.texture_resolutions:
+            raise ValueError(f"Invalid texture resolution: {self.texture_resolution}. Must be one of {list(v.texture_resolutions.keys())}.")
+        if self.base_model not in v.base_model:
+            raise ValueError(f"Invalid base model: {self.base_model}. Must be one of {v.base_model}.")
