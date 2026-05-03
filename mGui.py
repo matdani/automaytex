@@ -300,6 +300,12 @@ class automaytexGUI(QMainWindow):
         layout.addLayout(save_path_layout)
 
         # Material Type
+        layout.addWidget(QLabel("// Texture size: "))
+        self.texture_combo = QComboBox()
+        self.texture_combo.addItems(["512", "1024", "2048", "4096"])
+        layout.addWidget(self.texture_combo)
+
+        # Material Type
         layout.addWidget(QLabel("// Maya Material Type: "))
         self.material_combo = QComboBox()
         self.material_combo.addItems(["mtlx", "standard surface", "arnold aiStandard", "lambert"])
@@ -486,8 +492,9 @@ class automaytexGUI(QMainWindow):
             return "System info unavailable"
     
     def _on_texturize(self):
-        print(f"Starting Asset texturization: CURRENT settings: {settings}")
+        print(f"Starting Asset texturization: CURRENT settings:")
         settings = self.extract_generation_settings()
+        print(f"returned texturization settings: {settings.printdata()}")
 
     def extract_generation_settings(self):
         dConf = configuration()
@@ -516,6 +523,10 @@ class automaytexGUI(QMainWindow):
         dConf.assign_maya_material = self.assign_maya_check.isChecked()
         dConf.material_type = self.material_combo.currentText()
         dConf.output_path = self.save_path_input.text() if self.save_path_input.text() else dConf.output_path
+        
+        # manualn validation method to handle correctly data.
+        dConf.validate()
+        
         return dConf
 
 

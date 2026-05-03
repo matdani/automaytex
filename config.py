@@ -98,7 +98,35 @@ class configuration:
     seam_fixer_strength = 0.55
     seam_fixer_steps = 25
 
-    def __post_init__(self):
+    def printdata(self):
+        return f"""
+        BASE MODEL: {self.base_model}
+        CONTROLNET MODEL: {self.controlnet_model}
+        IP-ADAPTER MODEL: {self.ip_adapter_model}
+        IP-ADAPTER SCALE: {self.ip_adapter_scale}
+        QUANTIZATION: {self.quantization}
+        MATERIAL TYPE: {self.material_type}
+        TEXTURE RESOLUTION: {self.texture_resolution}
+        POSITIVE PROMPT: {self.positive_prompt}
+        NEGATIVE PROMPT: {self.negative_prompt}
+        INFERENCE STEPS: {self.inference_steps}
+        CFG SCALE: {self.cfg_scale}
+        NOISE: {self.noise}
+        SEED: {self.seed}
+        GENERATsED IMAGES: {self.generated_images}
+        SYSTEM PREFERENCE: {self.system_prfered}
+        ASSIGN MAYA MATERIAL: {self.assign_maya_material}
+        UV CHUNK SIZE: {self.uv_chunk_size}
+        ORTHO PADDING: {self.ortho_padding}
+        DEPTH SATURATION: {self.depth_saturation}
+        MATERIAL BASE NAME: {self.material_base_name}
+        RETARGET UV SET NAME: {self.retarget_uv_set_name}
+        CAMERA NAME: {self.camera_name}
+        SEAM FIXER STRENGTH: {self.seam_fixer_strength}
+        SEAM FIXER STEPS: {self.seam_fixer_steps}
+        """
+
+    def validate(self):
         v = validation()
         if self.material_type not in v.material_types:
             raise ValueError(f"Invalid material type: {self.material_type}. Must be one of {v.material_types}.")
@@ -106,3 +134,11 @@ class configuration:
             raise ValueError(f"Invalid texture resolution: {self.texture_resolution}. Must be one of {list(v.texture_resolutions.keys())}.")
         if self.base_model not in v.base_model:
             raise ValueError(f"Invalid base model: {self.base_model}. Must be one of {v.base_model}.")
+        
+
+
+if __name__ == "__main__":
+    config = configuration()
+    config.base_model = "sd154334"
+    config.validate()
+    print(config.printdata())

@@ -1,0 +1,16 @@
+{
+  "name": "automaytex",
+  "author": "Daniel Casadevall Jauhiainen",
+  "description": 
+  "Automaytex is a Python-based tool designed to automate the creation and processing of maya api texturing files. It provides a streamlined workflow for generating LaTeX documents, managing templates, and automating the build process. With features like automated compilation and template management, Automaytex aims to simplify the LaTeX document creation process for users of all levels.",
+  "purpose": 
+  "Streamline the creation and processing of LaTeX files with automated workflows",
+  "features": [
+    "Automated LaTeX compilation",
+    "Template management",
+    "Document generation",
+    "Build automation"
+  ],
+  "version": "1.0.0"
+}
+

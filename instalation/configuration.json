@@ -1,0 +1,11 @@
+{
+  "installationDirectory": "C:\\Users\\tomas\\Desktop\\automaytex\\automaytex",
+  "installationConfigFile": "C:\\Users\\tomas\\Desktop\\automaytex\\automaytex\\instalation\\configuration.json",
+  "modelDirectory": "C:\\Users\\tomas\\Desktop\\automaytex\\automaytex\\models",
+  "models": {
+    "default": "C:\\Users\\tomas\\Desktop\\automaytex\\automaytex\\models\\default-model.bin",
+    "vision": "C:\\Users\\tomas\\Desktop\\automaytex\\automaytex\\models\\vision-model.bin",
+    "language": "C:\\Users\\tomas\\Desktop\\automaytex\\automaytex\\models\\language-model.bin"
+  },
+  "logDirectory": "C:\\Users\\tomas\\Desktop\\automaytex\\automaytex\\logs"
+}
